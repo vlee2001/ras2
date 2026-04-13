@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Automators · Twin Cities</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #080C10;
+  --surface: #0E1319;
+  --surface2: #141B24;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --accent: #00E5A0;
+  --accent2: #38BDF8;
+  --accent3: #FF6B35;
+  --text: #F0F2F5;
+  --muted: #6B7A8D;
+  --muted2: #9AABB8;
+  --card-glow: rgba(0,229,160,0.04);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 48px;
+  background: rgba(8,12,16,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800; font-size: 15px;
+  letter-spacing: .08em; text-transform: uppercase;
+  background: linear-gradient(90deg, #00E5A0 0%, #38BDF8 50%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.nav-links { display: flex; gap: 32px; }
+.nav-links a {
+  color: var(--muted); font-size: 13px; text-decoration: none;
+  letter-spacing: .04em; transition: color .2s;
+}
+.nav-links a:hover { color: var(--text); }
+
+/* SECTIONS */
+section { padding: 120px 48px; max-width: 1200px; margin: 0 auto; }
+section.full { max-width: none; padding: 120px 0; }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  position: relative;
+  padding: 0 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  width: 100%;
+}
+.hero-eyebrow {
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--accent2); font-weight: 500;
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 28px;
+  white-space: nowrap;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 6px solid var(--accent2);
+  flex-shrink: 0;
+}
+.hero h1 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(42px, 5vw, 68px);
+  font-weight: 800; line-height: 1.05;
+  letter-spacing: -.02em;
+  margin-bottom: 24px;
+}
+.hero h1 span { color: var(--accent); }
+.hero-sub {
+  font-size: 17px; color: var(--muted2); line-height: 1.7;
+  margin-bottom: 40px; font-weight: 300;
+}
+.hero-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+.hero-tag {
+  font-size: 12px; letter-spacing: .06em;
+  padding: 6px 14px; border-radius: 20px;
+  border: 1px solid var(--border2);
+  color: var(--muted2);
+}
+.hero-visual {
+  position: relative;
+}
+.hero-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at top left, rgba(0,229,160,0.06), transparent 60%);
+  pointer-events: none;
+}
+.hero-card-label {
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 20px;
+}
+.hero-metrics {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+}
+.hero-metric {
+  background: var(--surface2);
+  border-radius: 12px;
+  padding: 20px;
+}
+.hero-metric-val {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 28px; font-weight: 700;
+  color: var(--accent); margin-bottom: 4px;
+}
+.hero-metric-lbl {
+  font-size: 12px; color: var(--muted); line-height: 1.3;
+}
+.hero-metric.blue .hero-metric-val { color: var(--accent2); }
+.hero-metric.orange .hero-metric-val { color: var(--accent3); }
+.hero-metric.white .hero-metric-val { color: var(--text); }
+.hero-metric.purple .hero-metric-val { color: #a78bfa; }
+
+/* BG NOISE */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: -1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none; opacity: .5;
+}
+
+/* SECTION HEADERS */
+.section-eyebrow {
+  font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--accent); font-weight: 500;
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px;
+}
+.section-eyebrow::before {
+  content: ''; width: 24px; height: 1px; background: var(--accent);
+}
+.section-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(30px, 3.5vw, 46px);
+  font-weight: 800; letter-spacing: -.02em;
+  line-height: 1.1; margin-bottom: 16px;
+}
+.section-sub {
+  font-size: 16px; color: var(--muted2);
+  max-width: 560px; line-height: 1.7; font-weight: 300;
+  margin-bottom: 60px;
+}
+.accent { color: var(--accent); }
+
+/* DIVIDER */
+.divider {
+  border: none; border-top: 1px solid var(--border);
+  margin: 0 48px;
+}
+
+/* ROLE SECTION */
+.role-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.role-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 36px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .3s;
+}
+.role-card:hover { border-color: var(--border2); }
+.role-card.tech { border-top: 2px solid var(--accent2); }
+.role-card.biz { border-top: 2px solid var(--accent); }
+.role-card::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--card-glow);
+  opacity: 0; transition: opacity .3s;
+  pointer-events: none;
+}
+.role-card:hover::after { opacity: 1; }
+.role-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 24px; font-size: 20px;
+}
+.role-icon.tech { background: rgba(56,189,248,0.12); }
+.role-icon.biz { background: rgba(0,229,160,0.1); }
+.role-card h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 20px; font-weight: 700;
+  margin-bottom: 8px;
+}
+.role-card .role-name {
+  font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 20px;
+}
+.role-list { list-style: none; }
+.role-list li {
+  font-size: 14px; color: var(--muted2); padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; gap: 10px;
+  line-height: 1.4;
+}
+.role-list li:last-child { border-bottom: none; }
+.role-list li::before {
+  content: '→'; color: var(--accent); flex-shrink: 0;
+  font-size: 12px; margin-top: 2px;
+}
+.role-list.blue li::before { color: var(--accent2); }
+
+/* OFFER STACK */
+.offer-stack { display: flex; flex-direction: column; gap: 16px; margin-bottom: 60px; }
+.offer-row {
+  display: grid;
+  grid-template-columns: 180px 1fr auto;
+  align-items: center; gap: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 28px;
+  transition: all .25s;
+}
+.offer-row:hover {
+  border-color: var(--border2);
+  transform: translateX(4px);
+}
+.offer-phase {
+  font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); font-weight: 500;
+}
+.offer-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px; font-weight: 700; margin-bottom: 4px;
+}
+.offer-desc { font-size: 13px; color: var(--muted2); line-height: 1.4; }
+.offer-price {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 20px; font-weight: 700;
+  text-align: right; white-space: nowrap;
+  color: var(--accent);
+}
+.offer-row.pilot .offer-price { color: var(--accent); }
+.offer-row.standard .offer-price { color: var(--accent); }
+.offer-row.full .offer-price { color: var(--accent); }
+.offer-row.voice .offer-price { color: var(--accent); }
+.offer-row.enterprise .offer-price { color: var(--accent); }
+.offer-row.enterprise {
+  border-color: rgba(0,229,160,0.15);
+  background: rgba(0,229,160,0.03);
+}
+
+/* PROJECTION CHART */
+.proj-controls {
+  display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap;
+}
+.proj-tab {
+  padding: 8px 20px; border-radius: 20px;
+  border: 1px solid var(--border2);
+  background: transparent; color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; cursor: pointer; transition: all .2s;
+}
+.proj-tab.active {
+  background: var(--accent); color: #000;
+  border-color: var(--accent); font-weight: 500;
+}
+.proj-tab.active.blue { background: var(--accent2); border-color: var(--accent2); color: #0a1a2e; }
+.proj-tab.active.orange { background: var(--accent3); border-color: var(--accent3); color: #fff; }
+.proj-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px; margin-bottom: 32px;
+}
+.proj-stats .pstat-pair {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.pstat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 16px;
+}
+.pstat-val {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 22px; font-weight: 700; margin-bottom: 2px;
+}
+.pstat-lbl { font-size: 12px; color: var(--muted); line-height: 1.3; }
+.pstat-val.green { color: var(--accent); }
+.pstat-val.blue { color: var(--accent2); }
+.pstat-val.orange { color: var(--accent3); }
+.chart-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+.chart-legend {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.cleg {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; color: var(--muted2);
+}
+.cleg-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+.cleg-line { width: 16px; height: 2px; border-radius: 1px; flex-shrink: 0; }
+
+/* DB REACTIVATION */
+.db-explainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px; margin-bottom: 48px;
+}
+.db-step {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  position: relative;
+}
+.db-step-num {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 48px; font-weight: 800;
+  color: rgba(255,255,255,0.04);
+  position: absolute; top: 16px; right: 20px;
+  line-height: 1;
+}
+.db-step h4 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px; font-weight: 700; margin-bottom: 8px;
+}
+.db-step p { font-size: 13px; color: var(--muted2); line-height: 1.5; }
+.db-step .db-val {
+  margin-top: 16px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 22px; font-weight: 700; color: var(--accent);
+}
+
+/* ENTERPRISE */
+.enterprise-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.ent-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px; padding: 32px;
+  position: relative; overflow: hidden;
+}
+.ent-card.featured {
+  border-color: rgba(255,107,53,0.3);
+  background: rgba(255,107,53,0.04);
+}
+.ent-card.featured::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at top right, rgba(255,107,53,0.08), transparent 60%);
+  pointer-events: none;
+}
+.ent-badge {
+  font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 10px;
+  margin-bottom: 20px; display: inline-block; font-weight: 500;
+}
+.ent-badge.year1 { background: rgba(0,229,160,0.1); color: var(--accent); }
+.ent-badge.year2 { background: rgba(255,107,53,0.15); color: var(--accent3); }
+.ent-card h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 20px; font-weight: 700; margin-bottom: 8px;
+}
+.ent-card .price {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 32px; font-weight: 800;
+  color: var(--accent3); margin-bottom: 16px;
+}
+.ent-list { list-style: none; }
+.ent-list li {
+  font-size: 13px; color: var(--muted2);
+  padding: 6px 0; border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; gap: 8px;
+}
+.ent-list li:last-child { border-bottom: none; }
+.ent-list li::before { content: '✓'; color: var(--accent); flex-shrink: 0; font-size: 12px; margin-top: 1px; }
+
+/* TIMELINE */
+.timeline { position: relative; padding-left: 48px; }
+.timeline::before {
+  content: '';
+  position: absolute; left: 12px; top: 8px; bottom: 8px;
+  width: 1px; background: var(--border);
+}
+.tl-item {
+  position: relative; margin-bottom: 48px;
+}
+.tl-item:last-child { margin-bottom: 0; }
+.tl-dot {
+  position: absolute; left: -42px; top: 6px;
+  width: 12px; height: 12px; border-radius: 50%;
+  border: 2px solid var(--border2);
+  background: var(--bg);
+}
+.tl-item.active .tl-dot {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 12px rgba(0,229,160,0.4);
+}
+.tl-month {
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 8px;
+}
+.tl-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 18px; font-weight: 700; margin-bottom: 8px;
+}
+.tl-desc { font-size: 14px; color: var(--muted2); line-height: 1.6; margin-bottom: 12px; }
+.tl-metrics { display: flex; gap: 12px; flex-wrap: wrap; }
+.tl-metric {
+  background: var(--surface2);
+  border-radius: 8px; padding: 8px 14px;
+  font-size: 12px; color: var(--muted2);
+}
+.tl-metric strong {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700; color: var(--text);
+  display: block; font-size: 15px;
+}
+
+/* CTA */
+.cta-section {
+  text-align: center;
+  padding: 120px 48px;
+  position: relative;
+}
+.cta-glow {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(0,229,160,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cta-section h2 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 800; letter-spacing: -.02em;
+  margin-bottom: 20px;
+}
+.cta-section p {
+  font-size: 17px; color: var(--muted2);
+  max-width: 500px; margin: 0 auto 48px;
+  font-weight: 300; line-height: 1.7;
+}
+.cta-stats {
+  display: flex; justify-content: center; gap: 60px;
+  flex-wrap: wrap;
+}
+.cta-stat { text-align: center; }
+.cta-stat-val {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 40px; font-weight: 800;
+  color: var(--accent); line-height: 1;
+  margin-bottom: 8px;
+}
+.cta-stat-lbl { font-size: 13px; color: var(--muted); }
+
+/* SCROLL REVEAL */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  section { padding: 80px 24px; }
+  .hero { padding: 100px 24px 80px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+  .role-grid { grid-template-columns: 1fr; }
+  .proj-stats { grid-template-columns: 1fr; }
+  .db-explainer { grid-template-columns: 1fr; }
+  .enterprise-grid { grid-template-columns: 1fr; }
+  .offer-row { grid-template-columns: 1fr; gap: 8px; }
+  .offer-price { text-align: left !important; }
+  .divider { margin: 0 24px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">AI Automators · Twin Cities</div>
+  <div class="nav-links">
+    <a href="#opportunity">Opportunity</a>
+    
+    <a href="#stack">Offer Stack</a>
+    <a href="#numbers">Numbers</a>
+    <a href="#realistic">Realistic Ramp</a>
+    <a href="#path">The Path</a>
+    <a href="#why">Why We Win</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div style="padding-top:80px">
+<section style="max-width:1200px;margin:0 auto;padding:100px 48px 0">
+  <div class="hero-grid">
+    <div class="hero-left">
+      <div class="hero-eyebrow">AI automation for local businesses — done for you, running in 48 hours.</div>
+      <h1>Most businesses leave 20–30% of their revenue on the table. <span>We built the system that picks it up.</span></h1>
+      <p class="hero-sub">We help local businesses stop leaving money on the table and start using AI to run better. Missed calls answered. Leads followed up. Customers brought back. We install it, run it, and show you the dollar number it recovers — every month.</p>
+      <div class="hero-tags">
+        <span class="hero-tag">AI Automation</span>
+        <span class="hero-tag">Done For You</span>
+        <span class="hero-tag">Twin Cities</span>
+        <span class="hero-tag">Local Service Businesses</span>
+        <span class="hero-tag">Live in 48 Hours</span>
+      </div>
+    </div>
+    <div class="hero-visual reveal">
+      <div class="hero-card">
+        <div class="hero-card-label">Realistic Business Projection — 24 months</div>
+        <div class="hero-metrics">
+          <div class="hero-metric">
+            <div class="hero-metric-val">$9,984</div>
+            <div class="hero-metric-lbl">Total Monthly Recurring Revenue · Month 12</div>
+          </div>
+          <div class="hero-metric blue">
+            <div class="hero-metric-val">$64,818</div>
+            <div class="hero-metric-lbl">Total Monthly Recurring Revenue · Month 24</div>
+          </div>
+          <div class="hero-metric orange">
+            <div class="hero-metric-val">$463,408</div>
+            <div class="hero-metric-lbl">Cumulative Revenue · 24 months</div>
+          </div>
+          <div class="hero-metric purple">
+            <div class="hero-metric-val">$231,704</div>
+            <div class="hero-metric-lbl">Each Partner's Total Earnings · 24 months</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<hr class="divider" style="margin-top:100px">
+
+<!-- OPPORTUNITY -->
+<section id="opportunity">
+  <div class="section-eyebrow">The Problem We Solve</div>
+  <h2 class="section-title">Most businesses leave 20–30% of their revenue on the table.<br><span class="accent">We built the system that picks it up.</span></h2>
+  <p class="section-sub">We help local businesses stop leaving money on the table and start using AI to run better. Missed calls answered. Leads followed up. Customers brought back. We install it, run it, and show you the dollar number it recovers — every month.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:20px" class="reveal">
+    <div class="role-card" style="border-top:2px solid var(--accent)">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:42px;font-weight:800;color:var(--accent);margin-bottom:12px">85%</div>
+      <div style="font-size:15px;font-weight:500;margin-bottom:8px">Don't leave a voicemail</div>
+      <div style="font-size:13px;color:var(--muted2);line-height:1.5">When a lead hits voicemail, 85% hang up and call the next company. That revenue is gone before anyone knows it existed.</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:10px;letter-spacing:.04em">Industry research</div>
+    </div>
+    <div class="role-card" style="border-top:2px solid var(--accent2)">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:42px;font-weight:800;color:var(--accent2);margin-bottom:12px">78%</div>
+      <div style="font-size:15px;font-weight:500;margin-bottom:8px">Buy from first responder</div>
+      <div style="font-size:13px;color:var(--muted2);line-height:1.5">78% of buyers choose the first company that responds. Speed is the product. The system responds in 60 seconds, every time.</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:10px;letter-spacing:.04em">Industry research</div>
+    </div>
+    <div class="role-card" style="border-top:2px solid var(--accent3)">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:42px;font-weight:800;color:var(--accent3);margin-bottom:12px">$7.7K</div>
+      <div style="font-size:15px;font-weight:500;margin-bottom:8px">Avg monthly leak per business</div>
+      <div style="font-size:13px;color:var(--muted2);line-height:1.5">At 10 missed calls/week — 43 per month — a 30% close rate and $600 average job means $7,740 in lost revenue every month before anyone picks up the phone.</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:10px;letter-spacing:.04em">Modeled from industry averages</div>
+    </div>
+  </div>
+
+  <!-- AI Guilt standalone panel -->
+  <div style="background:linear-gradient(135deg,rgba(167,139,250,0.08) 0%,rgba(167,139,250,0.03) 100%);border:1px solid rgba(167,139,250,0.3);border-left:4px solid #a78bfa;border-radius:16px;padding:32px 36px;display:flex;align-items:center;gap:40px;flex-wrap:wrap" class="reveal">
+    <div style="flex-shrink:0">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#a78bfa;margin-bottom:10px">The Hidden Sales Barrier</div>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:32px;font-weight:800;color:#a78bfa;line-height:1.1">AI Guilt</div>
+    </div>
+    <div style="flex:1;min-width:260px">
+      <div style="font-size:17px;font-weight:600;color:var(--text);margin-bottom:10px">They already know they're behind.</div>
+      <div style="font-size:14px;color:var(--muted2);line-height:1.7">Most business owners know AI could save them time and money — they just don't know where to start. They're not resistant. They're overwhelmed. This system removes that barrier entirely. Done for them. Running in 48 hours. No learning curve required.</div>
+    </div>
+    <div style="flex-shrink:0;text-align:center;background:rgba(167,139,250,0.1);border-radius:12px;padding:20px 28px">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:#a78bfa;font-weight:600;margin-bottom:4px">The entry point</div>
+      <div style="font-size:13px;color:var(--muted2);line-height:1.5;max-width:160px">They're already sold on the idea.<br>They just need someone to handle it.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ROLE -->
+<section id="role">
+  <div class="section-eyebrow">Better together isn't a slogan here. It's the architecture.</div>
+  <h2 class="section-title">Two strengths. <span class="accent">One business.</span></h2>
+  <p style="font-size:16px;color:var(--muted2);line-height:1.7;max-width:620px;margin-bottom:16px">The technical side without the sales side is a product nobody finds. The sales side without the technical side is a promise nobody can keep. This partnership closes that gap completely.</p>
+  <p class="section-sub"></p>
+
+  <div class="role-grid reveal">
+    <div class="role-card tech">
+      <div class="role-icon tech">⚙</div>
+      <h3>Technical Architect</h3>
+      <div class="role-name" style="color:var(--accent2)">The build · the infrastructure · the product</div>
+      <ul class="role-list blue">
+        <li>Designs and builds the core automation infrastructure on n8n and custom servers</li>
+        <li>Builds the AI voice agent layer — call screening, qualification, live routing</li>
+        <li>Builds client-specific integrations, webhook logic, and API connections</li>
+        <li>Builds the multi-location architecture that unlocks enterprise clients</li>
+        <li>Oversees system uptime, reliability, and technical performance</li>
+        <li>Develops proprietary AI layers for lead scoring and response intelligence</li>
+        <li>Brings technical credibility into enterprise sales conversations</li>
+        <li>Drives continuous product iteration as the offer stack expands</li>
+      </ul>
+    </div>
+    <div class="role-card biz">
+      <div class="role-icon biz">◈</div>
+      <h3>Business Operator</h3>
+      <div class="role-name" style="color:var(--accent)">The clients · the growth · the revenue</div>
+      <ul class="role-list">
+        <li>Sources, qualifies, and closes all clients through warm networks and outreach</li>
+        <li>Manages all client relationships, communications, and retention</li>
+        <li>Creates business strategy, positioning, and offer development</li>
+        <li>Delivers Day 7 updates and Day 30 scorecards — the retention engine</li>
+        <li>Runs all BNI and referral network activity</li>
+        <li>Leads upsell conversations and expansion into new tiers</li>
+        <li>Handles operations, documentation, and business systems</li>
+        <li>Leads the enterprise sales process with technical support alongside</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- OFFER STACK -->
+<section id="stack">
+  <div class="section-eyebrow">The Product</div>
+  <h2 class="section-title">One system. <span class="accent">Six revenue tiers.</span></h2>
+  <p class="section-sub">Clients enter at the pilot and ascend naturally as results prove themselves. Every tier runs on the same infrastructure — more revenue with near-zero additional cost.</p>
+
+  <!-- Founding Client Banner -->
+  <div style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.3);border-radius:14px;padding:20px 24px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px" class="reveal">
+    <div>
+      <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#a78bfa;font-weight:600;margin-bottom:6px">Founding Client Pricing — 5 slots open</div>
+      <div style="font-size:15px;color:var(--text);font-weight:500">All tiers available at founding rates for the first 5 clients.</div>
+      <div style="font-size:13px;color:var(--muted2);margin-top:4px">Same full deliverables. Rates shown below are standard pricing — founding clients receive 20% off any tier. Offer closes when slot 5 fills or June 30, whichever comes first.</div>
+    </div>
+    <div style="text-align:center;flex-shrink:0">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:36px;font-weight:800;color:#a78bfa;line-height:1">5</div>
+      <div style="font-size:12px;color:var(--muted2)">slots remaining</div>
+    </div>
+  </div>
+
+  <!-- Pilot spotlight -->
+  <div style="background:var(--surface);border:1px solid rgba(0,229,160,0.25);border-radius:20px;padding:32px;margin-bottom:20px;position:relative;overflow:hidden" class="reveal">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at top left,rgba(0,229,160,0.06),transparent 60%);pointer-events:none"></div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:24px">
+      <div>
+        <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:8px">Entry offer · The starting point for every client</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;font-weight:800;color:var(--text)">Missed Revenue Fix — 30-Day Pilot</div>
+        <div style="font-size:14px;color:var(--muted2);margin-top:6px">Live in 48 hours · One 30-minute kickoff call · Everything else is on us</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:36px;font-weight:800;color:var(--accent)">$597</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:2px">flat · no ongoing commitment</div>
+        <div style="font-size:12px;color:var(--accent);margin-top:6px;font-weight:500">Full refund if it doesn't work</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px;background:rgba(0,229,160,0.05);border-radius:10px;border:1px solid rgba(0,229,160,0.1)">
+        <div style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px"></div>
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px">Missed-call text-back</div>
+          <div style="font-size:12px;color:var(--muted2)">Fires in 60 seconds on their existing number, 24/7 including nights and weekends</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px;background:rgba(0,229,160,0.05);border-radius:10px;border:1px solid rgba(0,229,160,0.1)">
+        <div style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px"></div>
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px">Web form instant response</div>
+          <div style="font-size:12px;color:var(--muted2)">Same-minute acknowledgment for every online lead submitted</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px;background:rgba(0,229,160,0.05);border-radius:10px;border:1px solid rgba(0,229,160,0.1)">
+        <div style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px"></div>
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px">21-day automated follow-up sequence</div>
+          <div style="font-size:12px;color:var(--muted2)">SMS and email in their trade's language — runs without them touching anything</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px;background:rgba(0,229,160,0.05);border-radius:10px;border:1px solid rgba(0,229,160,0.1)">
+        <div style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px"></div>
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px">Automated Google review request</div>
+          <div style="font-size:12px;color:var(--muted2)">Fires automatically when a lead engages — no chasing, no awkward asks</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px;background:rgba(0,229,160,0.05);border-radius:10px;border:1px solid rgba(0,229,160,0.1)">
+        <div style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px"></div>
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px">Google Review Text Bank · 10 messages</div>
+          <div style="font-size:12px;color:var(--muted2)">10 ready-to-send review requests in 10 tones — delivered Day 1, surprise-and-delight</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px;background:rgba(0,229,160,0.05);border-radius:10px;border:1px solid rgba(0,229,160,0.1)">
+        <div style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px"></div>
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px">Trade-Specific Message Library · 25 templates</div>
+          <div style="font-size:12px;color:var(--muted2)">Pre-written SMS and email in their trade's language, loaded before go-live — Day 1</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px;background:rgba(0,229,160,0.05);border-radius:10px;border:1px solid rgba(0,229,160,0.1)">
+        <div style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px"></div>
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px">Pre-Drafted Referral Message Library · 8 messages</div>
+          <div style="font-size:12px;color:var(--muted2)">Referral asks in the client's natural voice, different angles — delivered Day 3</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px;background:rgba(0,229,160,0.05);border-radius:10px;border:1px solid rgba(0,229,160,0.1)">
+        <div style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px"></div>
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px">Day 7 Snapshot + Day 30 Revenue Scorecard</div>
+          <div style="font-size:12px;color:var(--muted2)">Day 7 snapshot — calls caught, leads responding, first proof. Day 30 full dollar recovery scorecard</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="offer-stack reveal">
+    <div class="offer-row standard">
+      <div>
+        <div class="offer-phase">Standard · Month 2+</div>
+      </div>
+      <div>
+        <div class="offer-name">Standard Retainer</div>
+        <div class="offer-desc">System stays live · Monthly scorecard · Review engine · Google Business Profile support · Referral activation sequence · Social signal monitoring — Nextdoor &amp; Facebook buying-intent alerts with pre-written responses</div>
+      </div>
+      <div class="offer-price">$897<span style="font-size:14px;color:var(--muted);font-weight:400">/mo</span></div>
+    </div>
+    <div class="offer-row full">
+      <div>
+        <div class="offer-phase">Full System · Month 3+</div>
+      </div>
+      <div>
+        <div class="offer-name">Full Revenue Recovery System</div>
+        <div class="offer-desc">Capture + recover + reactivate · Seasonal blast campaigns · Social calendar broadcasts · Referral program engine — full tracking, automated ask sequencing &amp; reward fulfillment · Quarterly revenue review</div>
+      </div>
+      <div class="offer-price">$1,397<span style="font-size:14px;color:var(--muted);font-weight:400">/mo</span></div>
+    </div>
+    <div class="offer-row voice">
+      <div>
+        <div class="offer-phase">Premium Bundle · Month 6+</div>
+      </div>
+      <div>
+        <div class="offer-name">Full Recovery System + AI Voice Receptionist</div>
+        <div class="offer-desc">Everything in Full Recovery System, plus live call screening 24/7 · Spam filtered · Leads qualify and book direct to calendar · Urgent routing to owner with full context · Voice also available as a standalone add-on: $600/mo to any retainer · $900/mo standalone only</div>
+      </div>
+      <div class="offer-price">$1,997<span style="font-size:14px;color:var(--muted);font-weight:400">/mo</span></div>
+    </div>
+    <div class="offer-row enterprise" style="background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(99,102,241,0.03));border:1px solid rgba(99,102,241,0.3)">
+      <div>
+        <div class="offer-phase" style="color:#818cf8">Enterprise · Year 2</div>
+      </div>
+      <div>
+        <div class="offer-name" style="color:#818cf8">Multi-Location Enterprise Package</div>
+        <div class="offer-desc">Built for franchise groups, PE-backed operators, and multi-location service companies · Multi-location dashboard with unified reporting · Custom API integrations and webhook architecture · White-label capability for franchise rollout · Compliance-grade data handling · Dedicated onboarding and quarterly strategy review · Requires technical partner for build and maintenance</div>
+      </div>
+      <div>
+        <div class="offer-price" style="color:#818cf8">$3,500–5,500<span style="font-size:14px;color:var(--muted);font-weight:400">/mo</span></div>
+        <div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.4;max-width:160px">Avg $3,500/mo used in projections. Unlocked by technical partner — multi-location architecture required.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add-ons row -->
+  <div style="margin-top:14px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px" class="reveal">
+    <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:500">Add-ons — bolt on after first documented win</div>
+    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px">
+
+
+      <div style="padding:12px;background:var(--surface2);border-radius:10px;border:1px solid var(--border)">
+        <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px">Website Chatbot</div>
+        <div style="font-size:12px;color:var(--muted2);margin-bottom:6px">AI chat widget qualifying visitors, booking appointments, SMS routing</div>
+        <div style="font-size:13px;font-weight:700;color:var(--accent)">$300–500/mo</div>
+      </div>
+
+      <div style="padding:12px;background:var(--surface2);border-radius:10px;border:1px solid var(--border)">
+        <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px">Proposal Drafting Engine</div>
+        <div style="font-size:12px;color:var(--muted2);margin-bottom:6px">Custom proposals generated from lead data, owner approves before sending</div>
+        <div style="font-size:13px;font-weight:700;color:var(--accent)">$300–400/mo</div>
+      </div>
+      <div style="padding:12px;background:var(--surface2);border-radius:10px;border:1px solid var(--border)">
+        <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px">AI Voice Receptionist — Standalone</div>
+        <div style="font-size:12px;color:var(--muted2);margin-bottom:6px">For clients who want live call handling only, without a full retainer</div>
+        <div style="font-size:13px;font-weight:700;color:var(--accent)">$900/mo</div>
+      </div>
+      <div style="padding:12px;background:var(--surface2);border-radius:10px;border:1px solid var(--border)">
+        <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px">Automated Booking & Client Onboarding</div>
+        <div style="font-size:12px;color:var(--muted2);margin-bottom:6px">When a customer books a job, the system takes over — instant confirmation, SMS reminders, and a pre-appointment questionnaire so your team shows up with full context. No manual scheduling. No back-and-forth. Every booking runs on autopilot.</div>
+        <div style="font-size:13px;font-weight:700;color:var(--accent)">$300–400/mo</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DB Reactivation -->
+  <div class="section-eyebrow">High-Margin Add-On</div>
+  <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;font-weight:800;margin-bottom:12px">Database reactivation — <span class="accent">the sleeper revenue stream</span></h3>
+  <p style="font-size:15px;color:var(--muted2);margin-bottom:32px;max-width:560px;line-height:1.6">Every client we sign has years of past customers sitting dormant. We go get them. This is where the technical infrastructure generates direct client revenue beyond the base system.</p>
+
+  <div class="db-explainer reveal">
+    <div class="db-step">
+      <div class="db-step-num">01</div>
+      <h4>Pull the database</h4>
+      <p>We export every past customer and dead estimate from their system. Companies with 3 years of history typically have 400–800 contacts sitting untouched.</p>
+      <div class="db-val">$1,800 flat</div>
+    </div>
+    <div class="db-step">
+      <div class="db-step-num">02</div>
+      <h4>Run the campaign</h4>
+      <p>Custom AI-written reactivation sequence in the client's voice. 14-day campaign. Personalized to the service type, the gap since last contact, and the season.</p>
+      <div class="db-val" style="color:var(--accent2)">2–4% reactivation</div>
+    </div>
+    <div class="db-step">
+      <div class="db-step-num">03</div>
+      <h4>Recurring subscription</h4>
+      <p>40% of campaign clients convert to a monthly reactivation subscription. This becomes permanent recurring revenue on top of the base retainer — near 100% margin.</p>
+      <div class="db-val" style="color:var(--accent3)">$600/mo ongoing</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROJECTION -->
+<section id="numbers">
+  <div class="section-eyebrow">The Numbers</div>
+  <h2 class="section-title">Revenue projection — <span class="accent">3 scenarios</span></h2>
+  <p class="section-sub">Conservative modeling with 5% monthly churn built in. Numbers reflect what the math produces — undershooting what's likely to avoid inflated expectations.</p>
+
+  <div class="proj-controls">
+    <button class="proj-tab active" onclick="switchScenario('conservative',this)">Conservative — slow build, 2 enterprise by M24</button>
+    <button class="proj-tab" onclick="switchScenario('realistic',this)">Realistic — avg 1/mo, 3 enterprise by M24</button>
+    <button class="proj-tab orange" onclick="switchScenario('strong',this)">Strong — 2–4/mo, 6 enterprise by M24</button>
+  </div>
+
+  <div id="sc-desc" style="font-size:14px;color:var(--muted2);padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:24px;line-height:1.5"></div>
+
+  <div class="proj-stats">
+    <div class="pstat-pair">
+      <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2);font-weight:500;margin-bottom:2px">Month 12</div>
+      <div class="pstat" style="border-top:2px solid var(--accent2)"><div class="pstat-val" id="p-m12" style="color:var(--text)">—</div><div class="pstat-lbl">Total Monthly Recurring Revenue</div></div>
+      <div class="pstat" style="border-top:2px solid var(--accent2)"><div class="pstat-val" id="p-e12" style="color:var(--text)">—</div><div class="pstat-lbl">Each partner's monthly profit share</div></div>
+    </div>
+    <div class="pstat-pair">
+      <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#a78bfa;font-weight:500;margin-bottom:2px">Month 18</div>
+      <div class="pstat" style="border-top:2px solid #a78bfa"><div class="pstat-val" id="p-m18" style="color:var(--text)">—</div><div class="pstat-lbl">Total Monthly Recurring Revenue</div></div>
+      <div class="pstat" style="border-top:2px solid #a78bfa"><div class="pstat-val" id="p-e18" style="color:var(--text)">—</div><div class="pstat-lbl">Each partner's monthly profit share</div></div>
+    </div>
+    <div class="pstat-pair">
+      <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent3);font-weight:500;margin-bottom:2px">Month 24</div>
+      <div class="pstat" style="border-top:2px solid var(--accent3)"><div class="pstat-val" id="p-m24" style="color:var(--text)">—</div><div class="pstat-lbl">Total Monthly Recurring Revenue</div></div>
+      <div class="pstat" style="border-top:2px solid var(--accent3)"><div class="pstat-val" id="p-e24" style="color:var(--text)">—</div><div class="pstat-lbl">Each partner's monthly profit share</div></div>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-legend">
+      <div class="cleg"><div class="cleg-dot" style="background:rgba(0,229,160,0.7)"></div>Base Monthly Recurring Revenue</div>
+      <div class="cleg"><div class="cleg-dot" style="background:rgba(56,189,248,0.7)"></div>DB reactivation</div>
+
+      <div class="cleg"><div class="cleg-line" style="background:#a78bfa"></div>Each partner</div>
+    </div>
+    <div style="position:relative;height:180px">
+      <canvas id="projChart"></canvas>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div style="background:#0E1319;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:20px 24px">
+      <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#6B7A8D;margin-bottom:12px">Revenue streams at month 24</div>
+      <div id="breakdown-m24" style="display:flex;flex-direction:column;gap:4px"></div>
+    </div>
+    <div style="background:#0E1319;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:20px 24px">
+      <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#6B7A8D;margin-bottom:12px">Cumulative earnings</div>
+      <div id="cumulative" style="display:flex;flex-direction:column;gap:4px"></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- REALISTIC PROJECTIONS -->
+<section id="realistic">
+  <div class="section-eyebrow">Realistic Ramp</div>
+  <h2 class="section-title">What the numbers <span class="accent">actually look like</span></h2>
+  <p class="section-sub">Not the best case. Not the worst. The honest month-by-month build — including the slow months, the curveballs, and the real compounding that follows.</p>
+
+  <div class="reveal">
+
+    <!-- Logic cards -->
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:32px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:14px;padding:22px 20px">
+        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;font-weight:500">Months 3–5 · Slow start</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:700;color:var(--text);margin-bottom:8px">0–1 clients/mo</div>
+        <div style="font-size:13px;color:var(--muted2);line-height:1.6">Learning the delivery, refining the pitch, and the first case study doesn't exist yet. BNI takes 2–3 months before referrals flow reliably. Some months will be zero — that's not failure, that's how every new business starts.</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent2);border-radius:14px;padding:22px 20px">
+        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);margin-bottom:10px;font-weight:500">Months 6–12 · Building</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:700;color:var(--text);margin-bottom:8px">2–4 clients/mo</div>
+        <div style="font-size:13px;color:var(--muted2);line-height:1.6">Case study exists. Scorecard numbers are real. Referrals arrive. Inconsistency is normal here — a strong month followed by a quiet one. The trend matters more than any single month.</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent3);border-radius:14px;padding:22px 20px">
+        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent3);margin-bottom:10px;font-weight:500">Months 13–24 · Compounding</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:700;color:var(--text);margin-bottom:8px">3–5 clients/mo</div>
+        <div style="font-size:13px;color:var(--muted2);line-height:1.6">Referrals compound. Upsells stack on the existing base. Voice add-ons, DB reactivation subscriptions, and chatbot upgrades layer revenue on top of retained clients. New acquisition matters less as the base matures.</div>
+      </div>
+    </div>
+
+    <!-- Month-by-month table -->
+    <div style="margin-bottom:28px">
+      <div style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:500">Month-by-month new client acquisition — including the curveballs</div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead>
+            <tr style="background:rgba(255,255,255,0.04)">
+              <th style="padding:10px 16px;text-align:left;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;border-bottom:1px solid var(--border)">Month</th>
+              <th style="padding:10px 16px;text-align:center;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;border-bottom:1px solid var(--border)">New clients</th>
+              <th style="padding:10px 16px;text-align:left;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;border-bottom:1px solid var(--border)">What's happening</th>
+              <th style="padding:10px 16px;text-align:right;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;border-bottom:1px solid var(--border)">Phase</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:10px 16px;color:var(--muted2)">Month 3</td>
+              <td style="padding:10px 16px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:var(--accent)">1</td>
+              <td style="padding:10px 16px;color:var(--muted2)">First pilot close — BNI warm intro</td>
+              <td style="padding:10px 16px;text-align:right"><span style="font-size:11px;padding:3px 8px;border-radius:4px;background:rgba(0,229,160,0.1);color:var(--accent);font-weight:500">Build</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.015)">
+              <td style="padding:10px 16px;color:var(--muted2)">Month 4</td>
+              <td style="padding:10px 16px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:var(--muted)">0</td>
+              <td style="padding:10px 16px;color:var(--muted2)">Quiet month — focusing on delivery of first client</td>
+              <td style="padding:10px 16px;text-align:right"><span style="font-size:11px;padding:3px 8px;border-radius:4px;background:rgba(0,229,160,0.1);color:var(--accent);font-weight:500">Build</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:10px 16px;color:var(--muted2)">Month 5</td>
+              <td style="padding:10px 16px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:var(--accent)">1</td>
+              <td style="padding:10px 16px;color:var(--muted2)">First case study in progress, second pilot closes</td>
+              <td style="padding:10px 16px;text-align:right"><span style="font-size:11px;padding:3px 8px;border-radius:4px;background:rgba(0,229,160,0.1);color:var(--accent);font-weight:500">Build</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.015)">
+              <td style="padding:10px 16px;color:var(--muted2)">Month 6</td>
+              <td style="padding:10px 16px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:var(--accent2)">2</td>
+              <td style="padding:10px 16px;color:var(--muted2)">BNI flywheel starting, case study complete</td>
+              <td style="padding:10px 16px;text-align:right"><span style="font-size:11px;padding:3px 8px;border-radius:4px;background:rgba(56,189,248,0.1);color:var(--accent2);font-weight:500">Building</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:10px 16px;color:var(--muted2)">Month 7</td>
+              <td style="padding:10px 16px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:var(--muted)">0</td>
+              <td style="padding:10px 16px;color:var(--muted2)">Churn spike — 3 early clients don't renew, regroup</td>
+              <td style="padding:10px 16px;text-align:right"><span style="font-size:11px;padding:3px 8px;border-radius:4px;background:rgba(56,189,248,0.1);color:var(--accent2);font-weight:500">Building</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.015)">
+              <td style="padding:10px 16px;color:var(--muted2)">Month 8</td>
+              <td style="padding:10px 16px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:var(--accent2)">2</td>
+              <td style="padding:10px 16px;color:var(--muted2)">Referrals from early happy clients, DB reactivation begins</td>
+              <td style="padding:10px 16px;text-align:right"><span style="font-size:11px;padding:3px 8px;border-radius:4px;background:rgba(56,189,248,0.1);color:var(--accent2);font-weight:500">Building</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:10px 16px;color:var(--muted2)">Month 9</td>
+              <td style="padding:10px 16px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:var(--accent2)">3</td>
+              <td style="padding:10px 16px;color:var(--muted2)">Strategic node network producing, strategic nodes activating</td>
+              <td style="padding:10px 16px;text-align:right"><span style="font-size:11px;padding:3px 8px;border-radius:4px;background:rgba(56,189,248,0.1);color:var(--accent2);font-weight:500">Building</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.015)">
+              <td style="padding:10px 16px;color:var(--muted2)">Month 10</td>
+              <td style="padding:10px 16px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:var(--accent2)">2</td>
+              <td style="padding:10px 16px;color:var(--muted2)">Upsells stacking on existing clients</td>
+              <td style="padding:10px 16px;text-align:right"><span style="font-size:11px;padding:3px 8px;border-radius:4px;background:rgba(56,189,248,0.1);color:var(--accent2);font-weight:500">Building</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:10px 16px;color:var(--muted2)">Month 11</td>
+              <td style="padding:10px 16px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:var(--muted)">0</td>
+              <td style="padding:10px 16px;color:var(--muted2)">Referral plateau — quiet month, focus on retention</td>
+              <td style="padding:10px 16px;text-align:right"><span style="font-size:11px;padding:3px 8px;border-radius:4px;background:rgba(56,189,248,0.1);color:var(--accent2);font-weight:500">Building</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.015)">
+              <td style="padding:10px 16px;color:var(--muted2)">Month 12</td>
+              <td style="padding:10px 16px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:var(--accent2)">3</td>
+              <td style="padding:10px 16px;color:var(--muted2)">Case studies fueling inbound, scorecards proving value</td>
+              <td style="padding:10px 16px;text-align:right"><span style="font-size:11px;padding:3px 8px;border-radius:4px;background:rgba(56,189,248,0.1);color:var(--accent2);font-weight:500">Building</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:10px 16px;color:var(--muted2)">Months 13–15</td>
+              <td style="padding:10px 16px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:var(--accent3)">3–4</td>
+              <td style="padding:10px 16px;color:var(--muted2)">Enterprise conversations begin, referral machine accelerating</td>
+              <td style="padding:10px 16px;text-align:right"><span style="font-size:11px;padding:3px 8px;border-radius:4px;background:rgba(255,107,53,0.1);color:var(--accent3);font-weight:500">Scale</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.015)">
+              <td style="padding:10px 16px;color:var(--muted2)">Months 16–18</td>
+              <td style="padding:10px 16px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:var(--accent3)">4–5</td>
+              <td style="padding:10px 16px;color:var(--muted2)">Upsell push — Full System upgrades compound</td>
+              <td style="padding:10px 16px;text-align:right"><span style="font-size:11px;padding:3px 8px;border-radius:4px;background:rgba(255,107,53,0.1);color:var(--accent3);font-weight:500">Scale</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:10px 16px;color:var(--muted2)">Months 19–21</td>
+              <td style="padding:10px 16px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:var(--accent3)">4–5</td>
+              <td style="padding:10px 16px;color:var(--muted2)">Voice add-ons and DB reactivation subscriptions stacking</td>
+              <td style="padding:10px 16px;text-align:right"><span style="font-size:11px;padding:3px 8px;border-radius:4px;background:rgba(255,107,53,0.1);color:var(--accent3);font-weight:500">Scale</span></td>
+            </tr>
+            <tr>
+              <td style="padding:10px 16px;color:var(--muted2)">Months 22–24</td>
+              <td style="padding:10px 16px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:var(--accent3)">4–5</td>
+              <td style="padding:10px 16px;color:var(--muted2)">Referral machine self-sustaining, full upsell stack live</td>
+              <td style="padding:10px 16px;text-align:right"><span style="font-size:11px;padding:3px 8px;border-radius:4px;background:rgba(255,107,53,0.1);color:var(--accent3);font-weight:500">Scale</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Retained client milestones -->
+    <div style="margin-bottom:28px">
+      <div style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:500">Retained clients at key milestones — 5% monthly churn included</div>
+      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px">
+        <div style="background:var(--surface);border:1px solid rgba(0,229,160,0.2);border-radius:12px;padding:18px 16px;text-align:center">
+          <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:8px">Month 6</div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:32px;font-weight:800;color:var(--accent)">6</div>
+          <div style="font-size:12px;color:var(--muted2);margin-top:4px">regular clients</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">0 enterprise</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid rgba(56,189,248,0.2);border-radius:12px;padding:18px 16px;text-align:center">
+          <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2);margin-bottom:8px">Month 12</div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:32px;font-weight:800;color:var(--accent2)">12</div>
+          <div style="font-size:12px;color:var(--muted2);margin-top:4px">regular clients</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">0 enterprise</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid rgba(167,139,250,0.2);border-radius:12px;padding:18px 16px;text-align:center">
+          <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#a78bfa;margin-bottom:8px">Month 18</div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:32px;font-weight:800;color:#a78bfa">24</div>
+          <div style="font-size:12px;color:var(--muted2);margin-top:4px">regular clients</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">1 enterprise</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid rgba(255,107,53,0.2);border-radius:12px;padding:18px 16px;text-align:center">
+          <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent3);margin-bottom:8px">Month 24</div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:32px;font-weight:800;color:var(--accent3)">36</div>
+          <div style="font-size:12px;color:var(--muted2);margin-top:4px">regular clients</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">3 enterprise</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cumulative -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:13px;color:var(--muted2)">Cumulative revenue · 24 months</span>
+        <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700;color:var(--accent3)">$463,408</span>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:13px;color:var(--muted2)">Each Partner's Total Earnings · 24 months</span>
+        <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700;color:#a78bfa">$231,704</span>
+      </div>
+    </div>
+
+    <!-- Closing line -->
+    <div style="background:var(--surface);border:1px solid rgba(0,229,160,0.15);border-left:3px solid var(--accent);border-radius:14px;padding:22px 24px">
+      <div style="font-size:15px;color:var(--text);line-height:1.7;font-style:italic">"The honest projection isn't from closing as many clients as possible. It's closing 2–4 per month consistently, delivering exceptional results, and letting every client upgrade naturally as results prove themselves. <span style="color:var(--accent);font-style:normal;font-weight:600">The compounding does the rest.</span>"</div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<hr class="divider">
+
+<!-- TIMELINE -->
+<section id="path">
+  <div class="section-eyebrow">The Path</div>
+  <h2 class="section-title">Month by month — <span class="accent">what this looks like</span></h2>
+  <p class="section-sub">Based on the baseline scenario. Every milestone is a clear gate before the next phase begins.</p>
+
+  <div class="timeline reveal">
+    <div class="tl-item active">
+      <div class="tl-dot" style="background:var(--accent);border-color:var(--accent);box-shadow:0 0 12px rgba(0,229,160,0.4)"></div>
+      <div class="tl-month" style="color:var(--accent)">Months 1–2 · Build phase</div>
+      <div class="tl-title">The infrastructure goes live</div>
+      <div class="tl-desc">Core n8n automation stack built and tested. Missed-call trigger fires in under 60 seconds. AI voice agent configured for local service business scenarios. Demo line live and ready for BNI presentation. First prospect conversations begin.</div>
+      <div class="tl-metrics">
+        <div class="tl-metric" style="background:rgba(0,229,160,0.08);border:1px solid rgba(0,229,160,0.15)"><strong style="color:var(--accent)">0</strong>Revenue</div>
+        <div class="tl-metric" style="background:rgba(0,229,160,0.08);border:1px solid rgba(0,229,160,0.15)"><strong style="color:var(--accent)">Live</strong>Demo system</div>
+        <div class="tl-metric" style="background:rgba(0,229,160,0.08);border:1px solid rgba(0,229,160,0.15)"><strong style="color:var(--accent)">Ready</strong>First pitch</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--accent2);border-color:var(--accent2);box-shadow:0 0 12px rgba(56,189,248,0.35)"></div>
+      <div class="tl-month" style="color:var(--accent2)">Months 3–6 · Proof phase</div>
+      <div class="tl-title">First clients. First results. First scorecards.</div>
+      <div class="tl-desc">Pilot clients close through BNI warm referrals and strategic nodes. Systems deploy. Day 7 signals come in — calls caught, estimated value shown. Day 30 scorecards land. First upgrades from pilot to standard retainer. Proof begins compounding into more referrals.</div>
+      <div class="tl-metrics">
+        <div class="tl-metric" style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.15)"><strong style="color:var(--accent2)">8–12</strong>Clients retained</div>
+        <div class="tl-metric" style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.15)"><strong style="color:var(--accent2)">$7–10K</strong>Monthly Recurring Revenue</div>
+        <div class="tl-metric" style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.15)"><strong style="color:var(--accent2)">Live</strong>Case studies</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="background:#a78bfa;border-color:#a78bfa;box-shadow:0 0 12px rgba(167,139,250,0.35)"></div>
+      <div class="tl-month" style="color:#a78bfa">Months 7–12 · Growth phase</div>
+      <div class="tl-title">Upsells stack. DB reactivation launches. Voice tier opens.</div>
+      <div class="tl-desc">Existing clients upgrade to full system retainers. Database reactivation campaigns begin — generating one-time campaign revenue and converting to ongoing $600/month subscriptions. Voice agent tier opens as a premium upgrade. Social signal monitoring add-on introduced. Case studies fuel new client acquisition.</div>
+      <div class="tl-metrics">
+        <div class="tl-metric" style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.15)"><strong style="color:#a78bfa">25–35</strong>Clients retained</div>
+        <div class="tl-metric" style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.15)"><strong style="color:#a78bfa">$20–35K</strong>Monthly Recurring Revenue</div>
+        <div class="tl-metric" style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.15)"><strong style="color:#a78bfa">Multiple</strong>Revenue streams</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--accent3);border-color:var(--accent3);box-shadow:0 0 12px rgba(255,107,53,0.35)"></div>
+      <div class="tl-month" style="color:var(--accent3)">Months 13–24 · Scale phase</div>
+      <div class="tl-title">Upsells compound. Revenue accelerates.</div>
+      <div class="tl-desc">Existing clients upgrade to higher tiers. Database reactivation subscriptions stack. The referral engine generates warm inbound without cold outreach. Blended revenue per client rises as the base matures and every upsell compounds on top of a retained foundation.</div>
+      <div class="tl-metrics">
+        <div class="tl-metric" style="background:rgba(255,107,53,0.08);border:1px solid rgba(255,107,53,0.15)"><strong style="color:var(--accent3)">40–60</strong>Clients retained</div>
+        <div class="tl-metric" style="background:rgba(255,107,53,0.08);border:1px solid rgba(255,107,53,0.15)"><strong style="color:var(--accent3)">$55–95K</strong>Monthly Recurring Revenue</div>
+        <div class="tl-metric" style="background:rgba(255,107,53,0.08);border:1px solid rgba(255,107,53,0.15)"><strong style="color:var(--accent3)">Full</strong>Upsell stack live</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOP 10 -->
+<hr class="divider">
+<section id="why">
+  <div class="section-eyebrow">Why We Win</div>
+  <h2 class="section-title">10 reasons this business <span class="accent">is built to succeed</span></h2>
+  <p class="section-sub">Not hype. Not projection. Just the honest case for why this works — and why right now is the right time.</p>
+
+  <div style="display:flex;flex-direction:column;gap:10px" class="reveal">
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;border-left:3px solid var(--accent);padding:26px 28px;display:grid;grid-template-columns:52px 1fr;gap:18px;align-items:start;transition:all .2s" onmouseover="this.style.background='rgba(0,229,160,0.04)'" onmouseout="this.style.background='var(--surface)'">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:800;color:var(--accent);line-height:1;opacity:.9">01</div>
+      <div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px">The market is massive and nobody is properly serving it</div>
+        <div style="font-size:14px;color:var(--muted2);line-height:1.7">Six hundred billion dollars. That's the size of the home services industry. Plumbers, pest controllers, HVAC techs, roofers — an entire economy of skilled tradespeople who are absolutely incredible at their craft and, bless their hearts, absolutely terrible at capturing the money it generates. Calls go to voicemail. Quotes disappear into the void. Past customers never hear from them again. This isn't a niche problem affecting a handful of businesses. This is a universal, daily, industry-wide revenue leak — and almost nobody is fixing it at a price point these businesses can actually say yes to. We're walking into a wide open market with a real solution. The timing couldn't be better.</div>
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;border-left:3px solid var(--accent2);padding:26px 28px;display:grid;grid-template-columns:52px 1fr;gap:18px;align-items:start;transition:all .2s" onmouseover="this.style.background='rgba(56,189,248,0.04)'" onmouseout="this.style.background='var(--surface)'">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:800;color:var(--accent2);line-height:1;opacity:.9">02</div>
+      <div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px">The numbers sell the product before we finish the sentence</div>
+        <div style="font-size:14px;color:var(--muted2);line-height:1.7">85% of people who hit voicemail don't leave a message. They hang up and call the next name on Google. 78% of buyers go with the first business that responds. So when we sit down with a business owner and do the math together — their missed calls, their average job value, their close rate — they're not watching a sales pitch anymore. They're watching their own money evaporate in real time. We didn't manufacture the problem. We just turned on the lights. And once someone sees exactly how much revenue has been quietly leaking out the back door every single month, they can't unsee it. The conversation closes itself.</div>
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;border-left:3px solid #a78bfa;padding:26px 28px;display:grid;grid-template-columns:52px 1fr;gap:18px;align-items:start;transition:all .2s" onmouseover="this.style.background='rgba(167,139,250,0.04)'" onmouseout="this.style.background='var(--surface)'">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:800;color:#a78bfa;line-height:1;opacity:.9">03</div>
+      <div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px">At $597, saying no is the most expensive decision they'll make all year</div>
+        <div style="font-size:14px;color:var(--muted2);line-height:1.7">Five hundred and ninety-seven dollars flat. Full refund if it doesn't work. And here's the math they can't argue with — recovering just four missed calls at a $600 average job covers the entire pilot. That's it. Four calls. Which for most businesses is a Tuesday. Everything beyond that? Pure profit, straight into their pocket. We show them exactly what came back every month on a scorecard — no vague marketing talk, no "trust the process," just real recovered revenue in black and white. The system pays for itself and then just keeps paying. At this price, with this guarantee, the only way to say no is to decide you'd genuinely rather keep losing money. Some people make that choice. Most don't.</div>
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;border-left:3px solid var(--accent3);padding:26px 28px;display:grid;grid-template-columns:52px 1fr;gap:18px;align-items:start;transition:all .2s" onmouseover="this.style.background='rgba(255,107,53,0.04)'" onmouseout="this.style.background='var(--surface)'">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:800;color:var(--accent3);line-height:1;opacity:.9">04</div>
+      <div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px">We walk in with a warm market most founders spend years trying to build — and we have it on day one</div>
+        <div style="font-size:14px;color:var(--muted2);line-height:1.7">Cold outreach is brutal. Most people building businesses like this are dialing strangers, emailing people who delete without reading, and running ads that burn cash. We don't have that problem. An active BNI membership gives us a room full of local business owners who already operate on trust and warm referral — across chapters throughout Minnesota and across the entire country. BNI members welcome fellow members. It's baked into the culture. We stand up, present a solution to a problem every single person in that room already feels, and the referrals start moving without a single cold call ever made. That's not a small edge. That's the kind of unfair advantage that makes other agency founders ask "how are you growing so fast?" The answer is — we started with the people already in our corner.</div>
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;border-left:3px solid var(--accent);padding:26px 28px;display:grid;grid-template-columns:52px 1fr;gap:18px;align-items:start;transition:all .2s" onmouseover="this.style.background='rgba(0,229,160,0.04)'" onmouseout="this.style.background='var(--surface)'">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:800;color:var(--accent);line-height:1;opacity:.9">05</div>
+      <div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px">The person leading sales has already proven he can do this</div>
+        <div style="font-size:14px;color:var(--muted2);line-height:1.7">The founder isn't figuring out B2B sales on the job. He walks in as a consistent top producer with three years of proven results — building relationships with business owners, earning their trust, closing deals, and keeping clients coming back. Those skills don't come from a course. They come from doing it, repeatedly, at a high level, in a competitive environment. Finding the pain, making the case, and turning a handshake into a long-term client relationship — that's his lane. The sales engine of this business isn't a variable we're hoping works out. It's already running.</div>
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;border-left:3px solid var(--accent2);padding:26px 28px;display:grid;grid-template-columns:52px 1fr;gap:18px;align-items:start;transition:all .2s" onmouseover="this.style.background='rgba(56,189,248,0.04)'" onmouseout="this.style.background='var(--surface)'">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:800;color:var(--accent2);line-height:1;opacity:.9">06</div>
+      <div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px">Once clients see the results, canceling starts to feel like losing money on purpose</div>
+        <div style="font-size:14px;color:var(--muted2);line-height:1.7">Our scorecard doesn't talk about impressions or reach or brand awareness. It shows one number — how much revenue came back that would have otherwise walked out the door. And that number shows up fast. A business missing 10 calls a week is losing $3,000–$6,000 every week — totaling up to $20,000 in possible lost revenue every month from missed calls alone. We recover that. By month three, the scorecard is showing recovered revenue that didn't exist before we turned the system on — and it compounds the longer it runs. When $20,000 in possible lost revenue is sitting on paper in front of an owner, canceling stops being a business decision. It becomes voluntarily handing that money back to the competitor down the street. Almost nobody makes that choice when the proof is right there in front of them.</div>
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;border-left:3px solid #a78bfa;padding:26px 28px;display:grid;grid-template-columns:52px 1fr;gap:18px;align-items:start;transition:all .2s" onmouseover="this.style.background='rgba(167,139,250,0.04)'" onmouseout="this.style.background='var(--surface)'">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:800;color:#a78bfa;line-height:1;opacity:.9">07</div>
+      <div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px">Our technical foundation gets us into rooms most competitors aren't even invited to</div>
+        <div style="font-size:14px;color:var(--muted2);line-height:1.7">Most people building businesses like this use the same off-the-shelf platform, charge commodity prices, and deliver generic results. This business is built differently — proprietary workflows, vertical-specific systems, and a delivery model that produces a real dollar number at Day 30 that clients can verify themselves. That's not a marketing claim. It's a scorecard. And it's what creates clients who stay, upgrade, and refer others without being asked.</div>
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;border-left:3px solid var(--accent3);padding:26px 28px;display:grid;grid-template-columns:52px 1fr;gap:18px;align-items:start;transition:all .2s" onmouseover="this.style.background='rgba(255,107,53,0.04)'" onmouseout="this.style.background='var(--surface)'">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:800;color:var(--accent3);line-height:1;opacity:.9">08</div>
+      <div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px">What we're building can't be copied off a shelf</div>
+        <div style="font-size:14px;color:var(--muted2);line-height:1.7">We're not reselling a platform anyone can license for $99 a month and call themselves an agency. We're building proprietary infrastructure — custom-built, privately hosted, designed from scratch for exactly what we deliver. Competitors can't replicate it by buying the same software because there is no same software to buy. And as the system deepens — reactivation sequences, referral engines, chatbots, seasonal campaigns — it becomes harder to cancel and more valuable to keep. The moat isn't just technical. It widens every month we keep building. That's a business with legs, not a product with an expiration date.</div>
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;border-left:3px solid var(--accent);padding:26px 28px;display:grid;grid-template-columns:52px 1fr;gap:18px;align-items:start;transition:all .2s" onmouseover="this.style.background='rgba(0,229,160,0.04)'" onmouseout="this.style.background='var(--surface)'">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:800;color:var(--accent);line-height:1;opacity:.9">09</div>
+      <div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px">The revenue doesn't just grow — it stacks</div>
+        <div style="font-size:14px;color:var(--muted2);line-height:1.7">Every client we keep generates revenue again next month with zero additional acquisition cost. Every upgrade from pilot to full retainer is more money from the same relationship. Every reactivation campaign that converts to an ongoing subscription adds permanent recurring income on top of the base. At three to five new clients per month, the business crosses $59,000 in monthly recurring revenue by month twelve and $287,000 by month twenty-four. That's not a best-case fantasy — that's the conservative baseline model with 5% monthly churn already baked in. This is what happens when retention is built into the product and the upsell ladder does exactly what it's designed to do.</div>
+      </div>
+    </div>
+
+    <div style="background:rgba(167,139,250,0.05);border:1px solid rgba(167,139,250,0.2);border-left:3px solid #a78bfa;border-radius:16px;padding:26px 28px;display:grid;grid-template-columns:52px 1fr;gap:18px;align-items:start;position:relative;overflow:hidden">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at top left,rgba(167,139,250,0.07),transparent 60%);pointer-events:none"></div>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:800;color:#a78bfa;line-height:1">10</div>
+      <div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px">We're building something worth a lot more than the income it generates</div>
+        <div style="font-size:14px;color:var(--muted2);line-height:1.7">Recurring revenue businesses with low churn, proven systems, and proprietary technology get acquired — and they get acquired at real money. In the automation and AI services space, recurring revenue businesses are currently selling for three to six times their annual recurring revenue. At $100,000 a month in Monthly Recurring Revenue, that puts the acquisition value of this business between $3.6 million and $7.2 million. At $200,000 a month — reachable within two years at a strong pace — that conversation starts north of $7 million and climbs from there. Every client retained, every case study built, every enterprise integration deployed is adding to that number in real time. We're not just building monthly income. We're building an asset — the kind serious buyers pay serious money for. And we're building it together.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- VISION -->
+<hr class="divider">
+<section>
+  <div class="section-eyebrow">The bigger picture</div>
+  <h2 class="section-title">What this becomes <span class="accent">if built right</span></h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start" class="reveal">
+    <div>
+      <p style="font-size:16px;color:var(--muted2);line-height:1.8;margin-bottom:20px">The goal isn't to run a busy agency forever. The goal is to build a system so well-designed, so deeply integrated into the businesses it serves, and so difficult to replace — that it becomes a legitimate asset.</p>
+      <p style="font-size:16px;color:var(--muted2);line-height:1.8;margin-bottom:20px">A business that generates predictable recurring revenue, requires less selling the longer it runs, and eventually reaches a scale where the options open up. Sell it. License it. Scale it with a team. Or simply run it at high margin as a lean, systems-driven solo operation.</p>
+      <p style="font-size:16px;color:var(--text);line-height:1.8;font-weight:500">That's the version of this worth building toward.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="background:var(--surface);border:1px solid rgba(0,229,160,0.15);border-left:3px solid var(--accent);border-radius:12px;padding:18px 20px">
+        <div style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;font-weight:500">Option A</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px">Run it lean and high-margin</div>
+        <div style="font-size:13px;color:var(--muted2);line-height:1.5">Two partners, 40–50 retained clients, maximum profitability. No hiring, no overhead, no complexity beyond what's needed.</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid rgba(56,189,248,0.15);border-left:3px solid var(--accent2);border-radius:12px;padding:18px 20px">
+        <div style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2);margin-bottom:6px;font-weight:500">Option B</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px">Productize and license</div>
+        <div style="font-size:13px;color:var(--muted2);line-height:1.5">Other agencies license the infrastructure. Recurring revenue from licensees who bring their own clients. Proprietary build is the moat.</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid rgba(255,107,53,0.15);border-left:3px solid var(--accent3);border-radius:12px;padding:18px 20px">
+        <div style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent3);margin-bottom:6px;font-weight:500">Option C</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px">Build to acquire</div>
+        <div style="font-size:13px;color:var(--muted2);line-height:1.5">At $100K Monthly Recurring Revenue with documented systems and low churn, acquisition value sits between $3.6M and $7.2M at current market multiples.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<hr class="divider">
+<div class="cta-section reveal">
+  <div class="cta-glow"></div>
+  <div class="section-eyebrow" style="justify-content:center;margin-bottom:20px">The Opportunity</div>
+  <h2>Built on a market that <span class="accent">isn't going anywhere</span></h2>
+  <p>Local service businesses will always miss calls. Leads will always go cold. Past customers will always sit dormant. The infrastructure gets built once. The revenue it generates compounds from there. This is a real business, in a real market, with a technical foundation that competitors cannot replicate. This is what that looks like.</p>
+  <div class="cta-stats">
+    <div class="cta-stat">
+      <div class="cta-stat-val">$597</div>
+      <div class="cta-stat-lbl">Entry point — zero risk for the client</div>
+    </div>
+    <div class="cta-stat">
+      <div class="cta-stat-val">$103K</div>
+      <div class="cta-stat-lbl">Realistic monthly revenue · month 24</div>
+    </div>
+    <div class="cta-stat">
+      <div class="cta-stat-val">$3.6M+</div>
+      <div class="cta-stat-lbl">Acquisition value at $100K Monthly Recurring Revenue</div>
+    </div>
+    <div class="cta-stat">
+      <div class="cta-stat-val">∞</div>
+      <div class="cta-stat-lbl">Ceiling — once the infrastructure is built</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// SCENARIO DATA
+const S = {
+  conservative: {
+    desc: 'Warm BNI referrals only, frequent zero months. 1-2 enterprise clients close by Month 24 via uncle technical partnership. The honest floor.',
+    nc: [0,0,1,0,0,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,1,2,1,1],
+    ne: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1],
+    eA: 3500, bc: 200, cp: 15
+  },
+  realistic: {
+    desc: 'Avg 1 new regular client per month with peaks of 2-3. 3 enterprise clients by Month 24. Technical partner enables multi-location deals from Month 12.',
+    nc: [0,0,1,0,1,2,0,2,3,2,0,3,3,3,2,3,3,3,3,4,3,4,3,4],
+    ne: [0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1],
+    eA: 3500, bc: 300, cp: 13
+  },
+  strong: {
+    desc: '2-4 new regular clients per month. Referral flywheel running. 6 enterprise clients by Month 24 with active outreach to franchise groups.',
+    nc: [0,0,2,1,2,2,1,3,3,2,2,3,4,4,3,4,4,4,4,5,4,5,4,5],
+    ne: [0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,1,0,1,0,1],
+    eA: 3500, bc: 420, cp: 12
+  }
+};
+
+function arpu(m) {
+  const a=[0,0,700,710,720,740,760,780,800,820,840,870,900,930,960,990,1020,1060,1100,1150,1200,1260,1320,1400];
+  return a[Math.min(m-1,23)]||1400;
+}
+function drawEach(mrr) {
+  if(mrr<3000) return 0;
+  if(mrr<6000) return 500;
+  if(mrr<10000) return 1000;
+  if(mrr<15000) return 1500;
+  if(mrr<22000) return 2000;
+  if(mrr<32000) return 2500;
+  if(mrr<45000) return 3000;
+  if(mrr<65000) return 3500;
+  return 4000;
+}
+function compute(key) {
+  const sc = S[key];
+  const rows = []; let rc=0, ec=0, ongoingDB=0;
+  for(let i=0;i<24;i++) {
+    const m=i+1;
+    if(m>=4) rc*=0.95;
+    rc+=sc.nc[i];
+    const rci=Math.round(rc);
+    ec+=sc.ne[i];
+    const baseMRR=rci*arpu(m);
+    const entMRR=ec*sc.eA;
+    let dbC=0, dbO=0;
+    if(m>=7&&rci>0) {
+      const camp=Math.round(rci*0.08);
+      dbC=camp*1800;
+      ongoingDB=Math.min(ongoingDB+camp*0.35, rci*0.22);
+      dbO=Math.round(ongoingDB)*600;
+    }
+    const dbRev=dbC+dbO;
+    const total=baseMRR+entMRR+dbRev;
+    let costs=sc.bc+Math.round(rci+ec)*sc.cp;
+    const net=Math.max(0,total-costs);
+    const dr=drawEach(total);
+    const pool=Math.max(0,net-dr*2);
+    const each=dr+pool/2;
+    rows.push({m,rci,ec,baseMRR,entMRR,dbRev,total,costs,net,dr,pool,each});
+  }
+  return rows;
+}
+
+const computed = {};
+['conservative','realistic','strong'].forEach(k=>computed[k]=compute(k));
+
+const fmt = n => '$'+Math.round(n).toLocaleString();
+
+let chart = null;
+let activeKey = 'baseline';
+
+function updateStats(key) {
+  const rows = computed[key];
+  const r12 = rows[11], r18 = rows[17], r24 = rows[23];
+  document.getElementById('p-m12').textContent = fmt(r12.total);
+  document.getElementById('p-m18').textContent = fmt(r18.total);
+  document.getElementById('p-m24').textContent = fmt(r24.total);
+  document.getElementById('p-e12').textContent = fmt(r12.each);
+  document.getElementById('p-e18').textContent = fmt(r18.each);
+  document.getElementById('p-e24').textContent = fmt(r24.each);
+  document.getElementById('sc-desc').textContent = S[key].desc;
+
+  const cumRev = rows.reduce((a,b)=>a+b.total,0);
+  const cumEach = rows.reduce((a,b)=>a+b.each,0);
+  const r = rows[23];
+
+  document.getElementById('breakdown-m24').innerHTML = [
+    {label:'Base recurring retainers', val:r.baseMRR, color:'#00E5A0'},
+    {label:'Database reactivation', val:r.dbRev, color:'#38BDF8'},
+    {label:'Enterprise packages', val:r.entMRR, color:'#FF6B35'},
+  ].map(({label,val,color})=>`
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06)">
+      <span style="font-size:13px;color:#9AABB8">${label}</span>
+      <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:${color}">${fmt(val)}</span>
+    </div>
+  `).join('');
+
+  document.getElementById('cumulative').innerHTML = [
+    {label:'Cumulative Revenue · 24 months', val:cumRev, color:'#00E5A0'},
+    {label:'Each partner\'s total earnings · 24 months', val:cumEach, color:'#a78bfa'},
+  ].map(({label,val,color})=>`
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06)">
+      <span style="font-size:13px;color:#9AABB8">${label}</span>
+      <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;color:${color}">${fmt(val)}</span>
+    </div>
+  `).join('');
+}
+
+function updateChart(key) {
+  const rows = computed[key];
+  const labels = rows.map(r=>'M'+r.m);
+  if(chart) chart.destroy();
+  const ctx = document.getElementById('projChart').getContext('2d');
+  chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {label:'Base Monthly Recurring Revenue', data:rows.map(r=>r.baseMRR), backgroundColor:'rgba(0,229,160,0.5)', borderColor:'rgba(0,229,160,0.8)', borderWidth:0.5, borderRadius:2, stack:'rev', order:2},
+        {label:'DB Reactivation', data:rows.map(r=>r.dbRev), backgroundColor:'rgba(56,189,248,0.5)', borderColor:'rgba(56,189,248,0.8)', borderWidth:0.5, borderRadius:2, stack:'rev', order:2},
+        {label:'Enterprise', data:rows.map(r=>r.entMRR), backgroundColor:'rgba(255,107,53,0.55)', borderColor:'rgba(255,107,53,0.8)', borderWidth:0.5, borderRadius:2, stack:'rev', order:2},
+        {label:'Each partner earns', data:rows.map(r=>r.each), type:'line', borderColor:'#a78bfa', backgroundColor:'transparent', borderWidth:2.5, pointRadius:1.5, pointBackgroundColor:'#a78bfa', tension:0.35, order:1}
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: {mode:'index', intersect:false},
+      plugins: {
+        legend: {display:false},
+        tooltip: {
+          backgroundColor:'rgba(14,19,25,0.95)',
+          borderColor:'rgba(255,255,255,0.1)',
+          borderWidth:1,
+          titleColor:'#F0F2F5',
+          bodyColor:'#9AABB8',
+          padding:12,
+          callbacks: {label(c){return ' '+c.dataset.label+': '+fmt(c.raw)}}
+        }
+      },
+      scales: {
+        x: {stacked:true, ticks:{color:'#6B7A8D',font:{size:10},maxRotation:0}, grid:{color:'rgba(255,255,255,0.04)'}},
+        y: {stacked:true, ticks:{color:'#6B7A8D',font:{size:11},callback:v=>v>=1000?'$'+(v/1000).toFixed(0)+'k':'$'+v}, grid:{color:'rgba(255,255,255,0.04)'}, beginAtZero:true}
+      }
+    }
+  });
+}
+
+function switchScenario(key, btn) {
+  activeKey = key;
+  document.querySelectorAll('.proj-tab').forEach(t=>t.classList.remove('active'));
+  if(btn) {
+    btn.classList.add('active');
+    if(key==='strong') btn.classList.add('orange');
+    if(key!=='strong') btn.classList.remove('orange');
+  }
+  updateStats(key);
+  updateChart(key);
+}
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// Init
+switchScenario('realistic', document.querySelectorAll('.proj-tab')[1]);
+</script>
+</body>
+</html>
